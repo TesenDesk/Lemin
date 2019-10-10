@@ -27,7 +27,7 @@ void queu_destroy(t_queu *q)
 ** если очередь q не существует, создает новую. **
 */
 
-t_queu *queu_add(t_queu *q, t_vertex *c)
+t_queu *queu_add(t_hash_map *map, t_queu *q, char *name)
 {
 	if (q)
 	{
@@ -38,7 +38,7 @@ t_queu *queu_add(t_queu *q, t_vertex *c)
 	}
 	else
 		q = ft_memalloc(sizeof(t_queu));
-	q->current = c;
+	q->current = (t_vertex *)hm_find(map, name);
 	q->next = NULL;
 	return (q);
 }
@@ -76,7 +76,7 @@ t_vertex *next(t_vertex *c)
 ** возвращает указатель на голову очереди. **
 */
 
-t_queu *add_this_q(t_vertex *c, t_queu *q)
+t_queu *add_this_q(t_hash_map *map, t_vertex *c, t_queu *q)
 {
 	t_dlist *conn;
 
@@ -86,7 +86,7 @@ t_queu *add_this_q(t_vertex *c, t_queu *q)
 		if (((t_vertex *)(conn->content))->visited)
 			conn = conn->next;
 		else
-			queu_add(q, conn->content);
+			queu_add(map, q, conn->content);
 	}
 	return (q);
 }
@@ -126,7 +126,7 @@ int	way_price(t_vertex *c)
 ** пути до каждой вершины. **
 */
 
-void bhs(t_vertex *c)
+void bhs(t_hash_map *map, t_vertex *c)
 {
 	t_vertex	*tmp = NULL;
 	t_queu		*q = NULL;
@@ -136,7 +136,7 @@ void bhs(t_vertex *c)
 		c->parent = tmp;
 		if (c->type != FIN)
 			c->visited = TRUE;
-		q = add_this_q(c, q);
+		q = add_this_q(map, c, q);
 		tmp = c;
 		c = q->current;
 		q = queu_remove(q);
