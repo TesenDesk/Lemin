@@ -6,7 +6,7 @@
 /*   By: jjerde <jjerde@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/23 17:16:46 by jjerde            #+#    #+#             */
-/*   Updated: 2019/10/09 21:53:16 by jjerde           ###   ########.fr       */
+/*   Updated: 2019/10/11 20:41:01 by jjerde           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ typedef	struct 				s_pair
 
 typedef struct	s_vertex
 {
+	char			*name;
 	int				type;
 	int				visited;
 	int				price;

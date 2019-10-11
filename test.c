@@ -5,61 +5,6 @@
 #include "lemin.h"
 
 /*
-** queu_destroy уничтожает очередь и высвобождает выделенную под нее память. **
-*/
-
-void queu_destroy(t_queu *q)
-{
-	t_queu *tmp;
-
-	if (!q)
-		return ;
-	while (q)
-	{
-		tmp = q->next;
-		free(q);
-		q = tmp;
-	}
-}
-
-/*
-** queu_add добавляет в конец очереди q заданную вершину c. **
-** если очередь q не существует, создает новую. **
-*/
-
-t_queu *queu_add(t_hash_map *map, t_queu *q, char *name)
-{
-	if (q)
-	{
-		while (q->next)
-			q = q->next;
-		q->next = ft_memalloc(sizeof(t_queu));
-		q = q->next;
-	}
-	else
-		q = ft_memalloc(sizeof(t_queu));
-	q->current = (t_vertex *)hm_find(map, name);
-	q->next = NULL;
-	return (q);
-}
-
-/*
-** queu_remove удаляет из головы очереди q одну вершину, **
-** освобождает выделенную под нее память и возвращает оставшуюся очередь. **
-*/
-
-t_queu *queu_remove(t_queu *q)
-{
-	t_queu	*tmp = NULL;
-
-	if (q && q->next)
-		tmp = q->next;
-	free(q);
-	q = 0;
-	return (tmp);
-}
-
-/*
 ** add_this_q добавляет в очередь q все вершины, которые соеденены **
 ** с данной вершиной c и не отмеченные как посещенные. **
 ** если очереди не существует, создает новую. **
@@ -115,10 +60,11 @@ int	way_price(t_vertex *c)
 ** В поле price записывает стоимость пути до этой вершины от стока. **
 */
 
-void bfs(t_hash_map *map, t_vertex *c)
+t_queu *bfs(t_hash_map *map, t_vertex *c)
 {
 	t_vertex	*tmp = NULL;
 	t_queu		*q = NULL;
+	t_queu		*qd = NULL;
 
 	while (c)
 	{
@@ -130,13 +76,15 @@ void bfs(t_hash_map *map, t_vertex *c)
 		else
 			c->price = 0;
 		q = add_this_q(map, c, q);
+		qd = q;
 		tmp = c;
 		if (c->type == 2)
 			c = NULL;
 		else
 			c = q->current;
-		q = queu_remove(q);
+		q = q->next;
 	}
+	return (qd);
 }
 
 /* ************************************************************************** */
