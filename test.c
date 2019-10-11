@@ -60,16 +60,6 @@ t_queu *queu_remove(t_queu *q)
 }
 
 /*
-** эта функция делат очень полезные вещи. (probably) **
-*/
-
-t_vertex *next(t_vertex *c)
-{
-	c = c->links->next->content;
-	return (c);
-}
-
-/*
 ** add_this_q добавляет в очередь q все вершины, которые соеденены **
 ** с данной вершиной c и не отмеченные как посещенные. **
 ** если очереди не существует, создает новую. **
@@ -122,8 +112,7 @@ int	way_price(t_vertex *c)
 /*
 ** применяет алгоритм поиска в ширину. Требует указатель на стартовую **
 ** вершину c (исток). Записывает в дату вершины сведения о родителе. **
-** Таким образом, пройдя по ссылкам-родителям, можно определить стоимость **
-** пути до каждой вершины. **
+** В поле price записывает стоимость пути до этой вершины от стока. **
 */
 
 void bhs(t_hash_map *map, t_vertex *c)
@@ -136,9 +125,16 @@ void bhs(t_hash_map *map, t_vertex *c)
 		c->parent = tmp;
 		if (c->type != FIN)
 			c->visited = TRUE;
+		if (c->parent)
+			c->price = c->parent->price + 1;
+		else
+			c->price = 0;
 		q = add_this_q(map, c, q);
 		tmp = c;
-		c = q->current;
+		if (c->type == 2)
+			c = NULL;
+		else
+			c = q->current;
 		q = queu_remove(q);
 	}
 }
