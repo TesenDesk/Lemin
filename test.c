@@ -11,7 +11,7 @@
 ** возвращает указатель на голову очереди. **
 */
 
-t_queu *add_this_q(t_hash_map *map, t_vertex *c, t_queu *q)
+t_queu *add_this_q(t_vertex *c, t_queu *q)
 {
 	t_dlist *conn;
 
@@ -21,7 +21,7 @@ t_queu *add_this_q(t_hash_map *map, t_vertex *c, t_queu *q)
 		if (((t_vertex *)(conn->content))->visited)
 			conn = conn->next;
 		else
-			queu_add(map, q, conn->content);
+			queu_add(q, conn->content);
 	}
 	return (q);
 }
@@ -56,11 +56,11 @@ int	way_price(t_vertex *c)
 
 /*
 ** применяет алгоритм поиска в ширину. Требует указатель на стартовую **
-** вершину c (исток). Записывает в дату вершины сведения о родителе. **
+** вершину c (исток). Записывает в поле parent сведения о родителе. **
 ** В поле price записывает стоимость пути до этой вершины от стока. **
 */
 
-t_queu *bfs(t_hash_map *map, t_vertex *c)
+t_queu *bfs(t_vertex *c)
 {
 	t_vertex	*tmp = NULL;
 	t_queu		*q = NULL;
@@ -75,7 +75,7 @@ t_queu *bfs(t_hash_map *map, t_vertex *c)
 			c->price = c->parent->price + 1;
 		else
 			c->price = 0;
-		q = add_this_q(map, c, q);
+		q = add_this_q(c, q);
 		qd = q;
 		tmp = c;
 		if (c->type == 2)

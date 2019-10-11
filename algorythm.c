@@ -6,16 +6,11 @@
 /*   By: jjerde <jjerde@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/11 18:40:48 by jjerde            #+#    #+#             */
-/*   Updated: 2019/10/11 20:33:39 by jjerde           ###   ########.fr       */
+/*   Updated: 2019/10/11 21:57:07 by jjerde           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lemin.h"
-
-t_dlist find_link(t_vertex *c, char *)
-{
-	t_
-}
 
 void link_destroy(t_vertex *c, t_dlist *link)
 {
@@ -28,29 +23,55 @@ void link_destroy(t_vertex *c, t_dlist *link)
 		current->next = link->next;
 }
 
-void deactivate_usless_paths(t_hash_map *map)
+void solve_link(t_vertex *c, t_dlist *l)
 {
-	t_queu *q;
-	t_vertex *c;
 	t_vertex *n;
+	t_dlist *nl;
 
-	c = hm_find(map, find_start(map)); //TODO: функция поиска истока?
-	q = bfs(map, c);
-	c = q->current;
-	while (c)
+	n = l->content;
+	nl = n->links;
+	while (nl)
 	{
-		n = hm_find(map, c->links->content);
-		while (n)
-		{
-			if 
-		}
+		if (((t_vertex *)(nl->content))->price > n->price)
+			link_destroy(c, l);
+		nl = nl->next;
 	}
-
 }
 
-void first(t_hash_map *map)
+void remove_useless_links(t_queu *q)
 {
-	t_vertex *finish;
+	t_dlist *l;
+	t_vertex *c;
 
-	finish = find_finish(map);
+	c = q->current;
+	q = q->next;
+	while (c)
+	{
+		l = c->links;
+		while (l)
+		{
+			if (c->price > ((t_vertex *)(l->content))->price)
+				link_destroy(c, l);
+			else if (c->price == ((t_vertex *)(l->content))->price)
+				solve_link(c, l);
+			l = l->next;
+		}
+		if (q)
+		{
+			c = q->current;
+			q = q->next;
+		}
+		else
+			c = NULL;
+	}
+}
+
+void something(t_vertex *c) //TODO: Переименовать функцию :)
+{
+	t_queu *q;
+
+	q = bfs(c); //TODO: функция поиска истока?
+	remove_useless_links(q);
+	//TODO: Дальнейший алгоритм :)
+	queu_destroy(q);
 }

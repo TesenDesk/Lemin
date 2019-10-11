@@ -6,7 +6,7 @@
 /*   By: jjerde <jjerde@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/23 17:16:46 by jjerde            #+#    #+#             */
-/*   Updated: 2019/10/11 20:41:01 by jjerde           ###   ########.fr       */
+/*   Updated: 2019/10/11 21:32:48 by jjerde           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,19 +25,55 @@
 
 # define BUFF_SIZE	16
 
-typedef struct          s_dlist
+typedef struct				s_dlist
 {
-	void				*content;
-	size_t				content_size;
-	struct s_dlist		*next;
-	struct s_dlist		*prev;
-}                       t_dlist;
+	void					*content;
+	size_t					content_size;
+	struct s_dlist			*next;
+	struct s_dlist			*prev;
+}							t_dlist;
+
+typedef struct				s_list
+{
+	void					*content;
+	size_t					content_size;
+	struct s_list			*next;
+}							t_list;
+
+typedef struct				s_avl_t
+{
+	int						key;
+	unsigned char			height;
+	void					*content;
+	size_t					size;
+	struct s_avl_t			*left;
+	struct s_avl_t			*right;
+}							t_avl_t;
 
 typedef	struct 				s_pair
 {
-	void					*key;
+	char					*key;
 	void					*content;
 }							t_pair;
+
+typedef struct				s_keystr_avl_t
+{
+	unsigned char			height;
+	t_pair					*pair;
+	size_t					size;
+	struct s_keystr_avl_t	*left;
+	struct s_keystr_avl_t	*right;
+}							t_keystr_avl_t;
+
+typedef struct				s_hashmap
+{
+	t_keystr_avl_t 			**data;
+	size_t 					map_size;
+	size_t 					arr_size;
+	size_t					limit;
+	size_t					l_factor;
+	float					multiplier;
+}							t_hash_map;
 
 typedef struct	s_vertex
 {
@@ -62,5 +98,20 @@ typedef struct	s_queu
 }				t_queu;
 
 //int				ft_printf(const char *str, ...);
+/*
+** queu
+*/
+
+t_queu *queu_add(t_queu *q, t_vertex *c);
+t_queu *queu_remove(t_queu *q);
+void queu_destroy(t_queu *q);
+
+/*
+** other
+*/
+
+t_queu *add_this_q(t_vertex *c, t_queu *q);
+int	way_price(t_vertex *c);
+t_queu *bfs(t_vertex *c);
 
 #endif

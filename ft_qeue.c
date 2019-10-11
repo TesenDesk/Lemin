@@ -6,7 +6,7 @@
 /*   By: jjerde <jjerde@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/11 19:19:13 by jjerde            #+#    #+#             */
-/*   Updated: 2019/10/11 19:19:54 by jjerde           ###   ########.fr       */
+/*   Updated: 2019/10/11 20:49:14 by jjerde           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void queu_destroy(t_queu *q)
 ** если очередь q не существует, создает новую. **
 */
 
-t_queu *queu_add(t_hash_map *map, t_queu *q, char *name)
+t_queu *queu_add(t_queu *q, t_vertex *c)
 {
 	if (q)
 	{
@@ -46,7 +46,7 @@ t_queu *queu_add(t_hash_map *map, t_queu *q, char *name)
 	}
 	else
 		q = ft_memalloc(sizeof(t_queu));
-	q->current = (t_vertex *)hm_find(map, name);
+	q->current = (t_vertex *)c;
 	q->next = NULL;
 	return (q);
 }
