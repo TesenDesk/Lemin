@@ -115,7 +115,7 @@ int	way_price(t_vertex *c)
 ** В поле price записывает стоимость пути до этой вершины от стока. **
 */
 
-void bhs(t_hash_map *map, t_vertex *c)
+void bfs(t_hash_map *map, t_vertex *c)
 {
 	t_vertex	*tmp = NULL;
 	t_queu		*q = NULL;
