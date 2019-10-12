@@ -1,5 +1,5 @@
 /* ************************************************************************** */
-/* ****** This is a 42.fr header. Trust me. I am a dolpfin. ***************** */
+/* ****** This is a 42.fr header. Trust me. I am a dolphin. ***************** */
 /* ************************************************************************** */
 
 #include "lemin.h"
@@ -59,6 +59,21 @@ int	way_price(t_vertex *c)
 ** вершину c (исток). Записывает в поле parent сведения о родителе. **
 ** В поле price записывает стоимость пути до этой вершины от стока. **
 */
+
+int finish_found(t_vertex *c)
+{
+	t_dlist	*l;
+
+	l = c->links;
+	while (l)
+	{
+		if (((t_vertex *)(l->content))->type == 2)
+			return (1);
+		l = l->next;
+	}
+	return (0);
+}
+
 
 t_queu *bfs(t_vertex *c)
 {

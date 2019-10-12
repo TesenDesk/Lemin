@@ -6,7 +6,7 @@
 /*   By: jjerde <jjerde@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/23 17:16:46 by jjerde            #+#    #+#             */
-/*   Updated: 2019/10/11 21:32:48 by jjerde           ###   ########.fr       */
+/*   Updated: 2019/10/12 21:02:05 by jjerde           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,16 @@
 # include <unistd.h>
 # include <stdlib.h>
 # include <limits.h>
+# include <stdio.h>
 //# include "ft_printf.h"
 
 # define START	1
 # define FIN	2
 # define TRUE	1
 # define FALSE	2
+# define VACUUM	-1
+# define LOCKED	1
+# define OPEN	0
 
 # define BUFF_SIZE	16
 
@@ -29,9 +33,26 @@ typedef struct				s_dlist
 {
 	void					*content;
 	size_t					content_size;
+	int						flow;
 	struct s_dlist			*next;
 	struct s_dlist			*prev;
 }							t_dlist;
+
+typedef struct				s_vertex
+{
+	char					*name;
+	int						type;
+	int						visited;
+	int						price;
+	struct s_vertex			*parent;
+	struct s_dlist			*links;
+}							t_vertex;
+
+typedef struct				s_queu
+{
+	struct s_vertex	*current;
+	struct s_queu	*next;
+}							t_queu;
 
 typedef struct				s_list
 {
@@ -75,15 +96,6 @@ typedef struct				s_hashmap
 	float					multiplier;
 }							t_hash_map;
 
-typedef struct	s_vertex
-{
-	char			*name;
-	int				type;
-	int				visited;
-	int				price;
-	struct s_vertex	*parent;
-	struct s_dlist	*links;
-}				t_vertex;
 /*
 typedef struct	s_conn
 {
@@ -91,11 +103,7 @@ typedef struct	s_conn
 	struct s_conn	*next;
 }				t_conn;
 */
-typedef struct	s_queu
-{
-	struct s_vertex	*current;
-	struct s_queu	*next;
-}				t_queu;
+t_dlist			*ft_dlstnew(void const *content, size_t content_size);
 
 //int				ft_printf(const char *str, ...);
 /*
