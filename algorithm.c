@@ -1,43 +1,61 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   algorythm.c                                        :+:      :+:    :+:   */
+/*   algorithm.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jjerde <jjerde@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/11 18:40:48 by jjerde            #+#    #+#             */
-/*   Updated: 2019/10/12 20:45:45 by jjerde           ###   ########.fr       */
+/*   Updated: 2019/10/14 23:10:41 by jjerde           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lemin.h"
 
-void lock_ways(t_vertex *c, t_dlist *l)
+void lock_ways(t_vertex *c, t_vertex *d)
 {
-	t_vertex *n;
+	t_dlist *l;
 
-	n = l->content;
-	l->flow = 1;
-	l = n->links;
-	while (l && l->content != c)
+	l = c->links;
+	while (l->content != d)
 		l = l->next;
-	if (!l)
-		printf("WARN! SEGMENTATION FAULT DETECTED IN algorithm.c (code 3418)! PLEASE FIX IT\n");
+	l->flow = LOCKED;
+	l = d->links;
+	while (l->content != c)
+		l = l->next;
 	l->flow = VACUUM;
+}
+
+void lock_path(t_vertex *s, t_dlist *path)
+{
+	t_dlist *head;
+
+	while (path)
+	{
+		lock_ways(s, path->next->content);
+		path = path->next;
+		if (path->next == head)
+			break;
+		s = path->content;
+	}
 }
 
 t_vertex *find_cheap_vertex(t_vertex *c)
 {
 	t_vertex *res;
 	t_dlist *l;
+	t_dlist *head;
 
 	res = c;
 	l = c->links;
+	head = l;
 	while (l)
 	{
 		if (res->price > ((t_vertex *)(l->content))->price)
 			res = l->content;
 		l = l->next;
+		if (l == head)
+			break;
 	}
 	return (res);
 }
@@ -46,14 +64,19 @@ t_dlist *shortest_way(t_vertex *f)
 {
 	t_dlist *path;
 	t_dlist *l;
+	t_dlist *head;
 
-	path = ft_dlstnew(f, sizeof(void *));
+	path = ft_dlstnew(f, sizeof(void *)); //TODO: функция не подходит под задачу. нужно заменить.
 	l = f->links->content;
-
-	while (l)
+	head = path;
+	ft_dlstadd(&head, ft_dlstnew(find_cheap_vertex(f), sizeof(void *))); //todo: ect.
+	while (((t_vertex *)(path->next->content))->type != START)
 	{
-
+		path = path->next;
+		f = path->content;
+		ft_dlstadd(&head, ft_dlstnew(f->parent, sizeof(void *))); //todo: ect...
 	}
+	return (l);
 }
 
 void something(t_vertex *s, t_vertex *f) //TODO: Переименовать функцию :)
@@ -63,6 +86,7 @@ void something(t_vertex *s, t_vertex *f) //TODO: Переименовать фу
 
 	q = bfs(s);
 	path = shortest_way(f);
+	lock_path(s, path);
 	//TODO: Дальнейший алгоритм :)
 	queu_destroy(q);
 }

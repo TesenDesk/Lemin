@@ -43,6 +43,7 @@ typedef struct				s_vertex
 	char					*name;
 	int						type;
 	int						visited;
+	int 					cap;
 	int						price;
 	struct s_vertex			*parent;
 	struct s_dlist			*links;
@@ -104,6 +105,7 @@ typedef struct	s_conn
 }				t_conn;
 */
 t_dlist			*ft_dlstnew(void const *content, size_t content_size);
+void				ft_dlstadd(t_dlist **head, t_dlist *new);
 
 //int				ft_printf(const char *str, ...);
 /*
