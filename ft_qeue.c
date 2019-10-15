@@ -6,7 +6,7 @@
 /*   By: jjerde <jjerde@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/11 19:19:13 by jjerde            #+#    #+#             */
-/*   Updated: 2019/10/14 23:11:20 by jjerde           ###   ########.fr       */
+/*   Updated: 2019/10/15 23:20:27 by jjerde           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 ** queu_destroy уничтожает очередь и высвобождает выделенную под нее память. **
 */
 
-void queu_destroy(t_queu *q)
+void queu_destroy(t_queu *q) //todo: заменить t_q на t_dl
 {
 	t_queu *tmp;
 
@@ -36,7 +36,7 @@ void queu_destroy(t_queu *q)
 ** если очередь q не существует, создает новую. **
 */
 
-t_queu *queu_add(t_queu *q, t_vertex *c)
+t_queu *queu_add(t_queu *q, t_vertex *c)//todo: ect.
 {
 	if (q)
 	{
@@ -53,11 +53,36 @@ t_queu *queu_add(t_queu *q, t_vertex *c)
 }
 
 /*
+** add_this_q добавляет в очередь q все вершины, которые соеденены **
+** с данной вершиной c и не отмеченные как посещенные. **
+** если очереди не существует, создает новую. **
+** возвращает указатель на голову очереди. **
+*/
+
+t_queu *add_this_q(t_vertex *c, t_queu *q)//todo: ect.
+{
+	t_dlist *conn;
+	t_dlist *head;
+
+	conn = c->links;
+	head = conn;
+	while (conn)
+	{
+		if (!((t_vertex *) (conn->content))->visited)
+			queu_add(q, conn->content);
+		conn = conn->next;
+		if (conn == head)
+			break ;
+	}
+	return (q);
+}
+
+/*
 ** queu_remove удаляет из головы очереди q одну вершину, **
 ** освобождает выделенную под нее память и возвращает оставшуюся очередь. **
 */
 
-t_queu *queu_remove(t_queu *q)
+t_queu *queu_remove(t_queu *q) //todo:ect.
 {
 	t_queu	*tmp = NULL;
 

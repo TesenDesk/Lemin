@@ -6,7 +6,7 @@
 /*   By: jjerde <jjerde@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/23 17:16:46 by jjerde            #+#    #+#             */
-/*   Updated: 2019/10/12 21:02:05 by jjerde           ###   ########.fr       */
+/*   Updated: 2019/10/15 16:04:57 by jjerde           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 # define START	1
 # define FIN	2
 # define TRUE	1
-# define FALSE	2
+# define FALSE	0
 # define VACUUM	-1
 # define LOCKED	1
 # define OPEN	0
@@ -104,7 +104,9 @@ typedef struct	s_conn
 	struct s_conn	*next;
 }				t_conn;
 */
-t_dlist			*ft_dlstnew(void const *content, size_t content_size);
+void				ft_dlstdel(t_dlist **alst, void (*delptr)(void *, size_t))
+void				ft_dlstpush_back(t_dlist **head, t_dlist *new);
+t_dlist				*ft_dlstnew(void const *content, size_t content_size);
 void				ft_dlstadd(t_dlist **head, t_dlist *new);
 
 //int				ft_printf(const char *str, ...);

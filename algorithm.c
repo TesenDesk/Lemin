@@ -6,11 +6,17 @@
 /*   By: jjerde <jjerde@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/11 18:40:48 by jjerde            #+#    #+#             */
-/*   Updated: 2019/10/14 23:10:41 by jjerde           ###   ########.fr       */
+/*   Updated: 2019/10/15 23:20:27 by jjerde           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lemin.h"
+
+/*
+** lock_ways выставляет параметры связей между c и d. **
+** Устанавливает в сторону c->d значение потока LOCKED, **
+** в обратную сторону - VACUUM. **
+*/
 
 void lock_ways(t_vertex *c, t_vertex *d)
 {
@@ -19,23 +25,38 @@ void lock_ways(t_vertex *c, t_vertex *d)
 	l = c->links;
 	while (l->content != d)
 		l = l->next;
-	l->flow = LOCKED;
+	if (!l->flow)
+		l->flow = LOCKED;
+	else
+		l->flow = OPEN;
 	l = d->links;
 	while (l->content != c)
 		l = l->next;
-	l->flow = VACUUM;
+	if (!l->flow)
+		l->flow = VACUUM;
+	else
+		l->flow = OPEN;
 }
 
-void lock_path(t_vertex *s, t_dlist *path)
+/*
+** lock_path регулирует параметры всех связей по пути path. **
+** устанавливает в стороу потока параметр связи LOCKED, **
+** в обратную - VACUUM. **
+*/
+
+void lock_path(t_dlist *path)
 {
 	t_dlist *head;
+	t_vertex *s;
 
-	while (path)
+	head = path;
+	s = path->content;
+	while (1)
 	{
 		lock_ways(s, path->next->content);
 		path = path->next;
-		if (path->next == head)
-			break;
+		if (path == head)
+			break ;
 		s = path->content;
 	}
 }
@@ -49,45 +70,118 @@ t_vertex *find_cheap_vertex(t_vertex *c)
 	res = c;
 	l = c->links;
 	head = l;
-	while (l)
+	while (1)
 	{
-		if (res->price > ((t_vertex *)(l->content))->price)
+		if (res->price != -1 && res->price > ((t_vertex *)(l->content))->price)
 			res = l->content;
 		l = l->next;
 		if (l == head)
-			break;
+			break ;
 	}
 	return (res);
+}
+
+void do_nothing(void *nothing, size_t size)
+{
+	(void)nothing;
+	(void)size;
+}
+
+void *free_path(t_dlist *path)
+{
+	ft_dlstdel(&path, do_nothing);
+	return (NULL);
 }
 
 t_dlist *shortest_way(t_vertex *f)
 {
 	t_dlist *path;
-	t_dlist *l;
 	t_dlist *head;
+	t_dlist *tmp;
 
-	path = ft_dlstnew(f, sizeof(void *)); //TODO: функция не подходит под задачу. нужно заменить.
-	l = f->links->content;
+	if (!(path = ft_dlstnew(&f, sizeof(t_vertex *))))
+		return (free_path(path));
 	head = path;
-	ft_dlstadd(&head, ft_dlstnew(find_cheap_vertex(f), sizeof(void *))); //todo: ect.
+	f = find_cheap_vertex(f);
+	if (!(tmp = ft_dlstnew(&f, sizeof(t_vertex *))))
+		return (free_path(path));
+	ft_dlstpush_back(&head, tmp);
 	while (((t_vertex *)(path->next->content))->type != START)
 	{
 		path = path->next;
 		f = path->content;
-		ft_dlstadd(&head, ft_dlstnew(f->parent, sizeof(void *))); //todo: ect...
+		if (!(tmp = ft_dlstnew(&f->parent, sizeof(t_vertex *))))
+			return (free_path(path));
+		ft_dlstpush_back(&head, tmp);
 	}
-	return (l);
+	return (path);
 }
 
-void something(t_vertex *s, t_vertex *f) //TODO: Переименовать функцию :)
+void set_around_as_not_visited(t_vertex *f)
+{
+	t_dlist *l;
+	t_dlist *head;
+
+	l = f->links;
+	head = l;
+	while (l)
+	{
+		((t_vertex *)(l ->content))->price = -1;
+		l = l->next;
+		if (l->next == head)
+			break ;
+	}
+}
+
+void add_queue_deep(t_vertex *c, t_dlist *q, int attempt)
+{
+	q->prev->content = c;
+	c->visited = attempt;
+}
+
+void add_all_to_queue_deep(t_vertex *c, t_dlist *q, int attempt)
+{
+	t_dlist *l;
+	t_dlist *head;
+
+	l = c->links;
+	while (l)
+	{
+		if (l->flow == OPEN)//todo: разобраться с формулой!.
+		{
+			if (((t_vertex *) (l->content))->visited < attempt && )
+				add_queue_deep(l->content, head, attempt);
+		}
+		l = l->next;
+		if (l == head)
+			break ;
+	}
+}
+
+void *bfs_deep(t_vertex *s, int attempt)
+{
+	t_vertex *current;
+	t_dlist *q;
+
+	q->content =
+}
+
+void *something(t_vertex *s, t_vertex *f) //TODO: Переименовать функцию :)
 {
 	t_queu *q;
-	t_dlist *path;
+	t_dlist *paths;
+	t_dlist *new_path;
 
 	q = bfs(s);
-	path = shortest_way(f);
-	lock_path(s, path);
-	//TODO: Дальнейший алгоритм :)
+	if (!(paths = ft_dlstnew(NULL, 0)))
+		return (NULL);
+	paths->content = shortest_way(f);//todo: найти доп. не пересекающиеся пути
+	lock_path(paths->content);
+	while ((new_path = bfs_deep(s)))
+	{
+
+	}
+
 	queu_destroy(q);
 }
 
