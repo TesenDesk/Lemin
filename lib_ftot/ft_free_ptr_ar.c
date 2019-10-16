@@ -1,28 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_dlstforeach.c                                   :+:      :+:    :+:   */
+/*   ft_free_ptr_ar.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ftothmur <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ftothmur <ftothmur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/09/23 16:01:14 by ftothmur          #+#    #+#             */
-/*   Updated: 2019/10/16 20:11:58 by jjerde           ###   ########.fr       */
+/*   Created: 2019/10/05 17:38:29 by ftothmur          #+#    #+#             */
+/*   Updated: 2019/10/15 18:19:39 by ftothmur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft_f.h"
 
-void	ft_dlstforeach(t_dlist *node, void (*fptr)(void *))
+void				ft_free_ptr_ar(void ***ar)
 {
-	t_dlist	*curr;
+	void			**curr;
 
-	curr = node;
-	if (fptr && node)
-		while (TRUE)
-		{
-			(*fptr)(curr->content);
-			if ((curr = curr->next) == node)
-				break ;
-		}
+	if (ar && (curr = *ar))
+	{
+		if (curr)
+			while (*curr)
+				free(*curr++);
+		ft_memdel((void **)ar);
+	}
 	return ;
 }

@@ -1,28 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_dlstforeach.c                                   :+:      :+:    :+:   */
+/*   ft_ddeqdel.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ftothmur <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ftothmur <ftothmur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/09/23 16:01:14 by ftothmur          #+#    #+#             */
-/*   Updated: 2019/10/16 20:11:58 by jjerde           ###   ########.fr       */
+/*   Created: 2019/10/16 18:18:38 by ftothmur          #+#    #+#             */
+/*   Updated: 2019/10/16 19:04:01 by ftothmur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft_f.h"
 
-void	ft_dlstforeach(t_dlist *node, void (*fptr)(void *))
+void			ft_ddeqdel(t_ddeq **ddeq, void (*delfunc)(void *, size_t))
 {
-	t_dlist	*curr;
-
-	curr = node;
-	if (fptr && node)
-		while (TRUE)
-		{
-			(*fptr)(curr->content);
-			if ((curr = curr->next) == node)
-				break ;
-		}
+	if (ddeq && *ddeq)
+	{
+		if (!delfunc)
+			delfunc = &ft_delfunc_dummy;
+		ft_dlstdel(&(*ddeq)->a, delfunc);
+		ft_dlstdel(&(*ddeq)->b, delfunc);
+		ft_memdel((void **)ddeq);
+	}
 	return ;
 }

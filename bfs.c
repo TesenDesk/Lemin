@@ -6,11 +6,11 @@
 /*   By: jjerde <jjerde@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/14 23:08:33 by jjerde            #+#    #+#             */
-/*   Updated: 2019/10/14 23:10:47 by jjerde           ###   ########.fr       */
+/*   Updated: 2019/10/16 23:22:15 by jjerde           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lemin.h"
+#include "includes/lemin_my.h"
 
 /*
 ** way_price исследует родителей вершин и определяет стоимость пути **
@@ -61,11 +61,11 @@ int finish_found(t_vertex *c)
 }
 
 
-t_queu *bfs(t_vertex *c)
+t_dlist *bfs(t_vertex *c) //todo: check inf. loops
 {
 	t_vertex	*tmp = NULL;
-	t_queu		*q = NULL;
-	t_queu		*qd = NULL;
+	t_dlist		*q = NULL;
+	t_dlist		*qd = NULL;
 
 	while (c)
 	{
@@ -82,7 +82,7 @@ t_queu *bfs(t_vertex *c)
 		if (c->type == FIN)
 			c = NULL;
 		else
-			c = q->current;
+			c = q->content;
 		q = q->next;
 	}
 	return (qd);

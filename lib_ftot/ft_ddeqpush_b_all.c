@@ -1,28 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_dlstforeach.c                                   :+:      :+:    :+:   */
+/*   ft_ddeqpush_b_all.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ftothmur <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ftothmur <ftothmur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/09/23 16:01:14 by ftothmur          #+#    #+#             */
-/*   Updated: 2019/10/16 20:11:58 by jjerde           ###   ########.fr       */
+/*   Created: 2019/10/16 18:19:25 by ftothmur          #+#    #+#             */
+/*   Updated: 2019/10/16 19:03:50 by ftothmur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft_f.h"
 
-void	ft_dlstforeach(t_dlist *node, void (*fptr)(void *))
+void			ft_ddeqpush_b_all(t_ddeq *ddeq)
 {
-	t_dlist	*curr;
+	t_dlist		*curr;
 
-	curr = node;
-	if (fptr && node)
-		while (TRUE)
-		{
-			(*fptr)(curr->content);
-			if ((curr = curr->next) == node)
-				break ;
-		}
+	if (ddeq && (curr = ddeq->a))
+		while (ddeq->a)
+			ft_ddeqpush_b(ddeq);
 	return ;
 }

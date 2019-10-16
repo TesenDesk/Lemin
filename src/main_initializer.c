@@ -1,28 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_dlstforeach.c                                   :+:      :+:    :+:   */
+/*   main_initializer.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ftothmur <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ftothmur <ftothmur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/09/23 16:01:14 by ftothmur          #+#    #+#             */
-/*   Updated: 2019/10/16 20:11:58 by jjerde           ###   ########.fr       */
+/*   Created: 2019/10/11 16:08:49 by ftothmur          #+#    #+#             */
+/*   Updated: 2019/10/16 23:30:20 by jjerde           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft_f.h"
+#include "ftothmur.h"
 
-void	ft_dlstforeach(t_dlist *node, void (*fptr)(void *))
+int					main(void)
 {
-	t_dlist	*curr;
-
-	curr = node;
-	if (fptr && node)
-		while (TRUE)
-		{
-			(*fptr)(curr->content);
-			if ((curr = curr->next) == node)
-				break ;
-		}
-	return ;
+	t_fill_return	a;
+	
+	a = fill_map();
+	ft_printf("%s", (a.iserror ? "FAILURE" : "SUCCESS"));
+	something(a.v_source, a.v_sink);
+	return (0);
 }

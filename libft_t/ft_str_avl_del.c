@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/libft.h"
+#include "libft.h"
 
 void					ft_keystr_avl_del(t_keystr_avl_t **_root_)
 {

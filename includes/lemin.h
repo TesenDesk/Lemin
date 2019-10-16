@@ -3,127 +3,57 @@
 /*                                                        :::      ::::::::   */
 /*   lemin.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jjerde <jjerde@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jstokes <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/07/23 17:16:46 by jjerde            #+#    #+#             */
-/*   Updated: 2019/10/15 16:04:57 by jjerde           ###   ########.fr       */
+/*   Created: 2019/10/09 17:46:12 by jstokes           #+#    #+#             */
+/*   Updated: 2019/10/16 23:26:44 by jjerde           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LEMIN_H
-
 # define LEMIN_H
-# include <unistd.h>
-# include <stdlib.h>
-# include <limits.h>
-# include <stdio.h>
-//# include "ft_printf.h"
 
-# define START	1
-# define FIN	2
-# define TRUE	1
-# define FALSE	0
-# define VACUUM	-1
-# define LOCKED	1
-# define OPEN	0
+# include "libft.h"
+# include <fcntl.h>
 
-# define BUFF_SIZE	16
-
-typedef struct				s_dlist
+typedef struct	s_mainstr
 {
-	void					*content;
-	size_t					content_size;
-	int						flow;
-	struct s_dlist			*next;
-	struct s_dlist			*prev;
-}							t_dlist;
+	t_hash_map	*map;
+	t_list		*list;
+	t_list		*start;
+	t_list		*end;
+	char		start_fl;
+	char		end_fl;
+	size_t		rooms;
+	int			ants;
 
-typedef struct				s_vertex
-{
-	char					*name;
-	int						type;
-	int						visited;
-	int 					cap;
-	int						price;
-	struct s_vertex			*parent;
-	struct s_dlist			*links;
-}							t_vertex;
+}				t_mainstr;
 
-typedef struct				s_queu
-{
-	struct s_vertex	*current;
-	struct s_queu	*next;
-}							t_queu;
+void			print_usage(void);
+void			print_error(void);
 
-typedef struct				s_list
-{
-	void					*content;
-	size_t					content_size;
-	struct s_list			*next;
-}							t_list;
+void			clean_mainstr(t_mainstr **mainstr);
+void			clean_n_error(t_mainstr *mainstr, char **mem, int fd);
+void			strspl_cl_n_err(char **tmp, t_mainstr *mainstr,
+							char **mem, int fd);
 
-typedef struct				s_avl_t
-{
-	int						key;
-	unsigned char			height;
-	void					*content;
-	size_t					size;
-	struct s_avl_t			*left;
-	struct s_avl_t			*right;
-}							t_avl_t;
+char			**ft_strsplitest(char const *s);
+void			ft_strsplitdel(char ***arr);
+void			ft_lstdelstr(t_list **alst);
+void			ft_lstaddend(t_list **alst, t_list *new);
+size_t			ft_lstlen(t_list *alst);
 
-typedef	struct 				s_pair
-{
-	char					*key;
-	void					*content;
-}							t_pair;
+t_cont			*create_cont(int x, int y);
 
-typedef struct				s_keystr_avl_t
-{
-	unsigned char			height;
-	t_pair					*pair;
-	size_t					size;
-	struct s_keystr_avl_t	*left;
-	struct s_keystr_avl_t	*right;
-}							t_keystr_avl_t;
+t_mainstr		*read_from_file(char *str);
 
-typedef struct				s_hashmap
-{
-	t_keystr_avl_t 			**data;
-	size_t 					map_size;
-	size_t 					arr_size;
-	size_t					limit;
-	size_t					l_factor;
-	float					multiplier;
-}							t_hash_map;
+t_mainstr		*read_from_fd(int fd);
 
-/*
-typedef struct	s_conn
-{
-	struct s_vertex	*current;
-	struct s_conn	*next;
-}				t_conn;
-*/
-void				ft_dlstdel(t_dlist **alst, void (*delptr)(void *, size_t))
-void				ft_dlstpush_back(t_dlist **head, t_dlist *new);
-t_dlist				*ft_dlstnew(void const *content, size_t content_size);
-void				ft_dlstadd(t_dlist **head, t_dlist *new);
+char			**get_rooms(t_mainstr *mainstr, int fd);
+void			analize_command(t_mainstr *mainstr, char **tmp, int fd);
 
-//int				ft_printf(const char *str, ...);
-/*
-** queu
-*/
-
-t_queu *queu_add(t_queu *q, t_vertex *c);
-t_queu *queu_remove(t_queu *q);
-void queu_destroy(t_queu *q);
-
-/*
-** other
-*/
-
-t_queu *add_this_q(t_vertex *c, t_queu *q);
-int	way_price(t_vertex *c);
-t_queu *bfs(t_vertex *c);
+t_mainstr		*init_mainstr(int fd);
+int				check_str(char *str, int j, int num);
+int				check_link(t_list *lst, char *name);
 
 #endif

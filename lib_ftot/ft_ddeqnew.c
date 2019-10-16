@@ -1,28 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_dlstforeach.c                                   :+:      :+:    :+:   */
+/*   ft_ddeqnew.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ftothmur <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ftothmur <ftothmur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/09/23 16:01:14 by ftothmur          #+#    #+#             */
-/*   Updated: 2019/10/16 20:11:58 by jjerde           ###   ########.fr       */
+/*   Created: 2019/10/16 17:07:42 by ftothmur          #+#    #+#             */
+/*   Updated: 2019/10/16 19:04:06 by ftothmur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft_f.h"
 
-void	ft_dlstforeach(t_dlist *node, void (*fptr)(void *))
+t_ddeq			*ft_ddeqnew(t_dlist *a)
 {
-	t_dlist	*curr;
+	t_ddeq		*ddeq;
 
-	curr = node;
-	if (fptr && node)
-		while (TRUE)
-		{
-			(*fptr)(curr->content);
-			if ((curr = curr->next) == node)
-				break ;
-		}
-	return ;
+	if (!(ddeq = (t_ddeq *)ft_memalloc(sizeof(*ddeq))))
+		return (NULL);
+	if (a)
+		ft_dlstpush_back(&ddeq->a, a);
+	return (ddeq);
 }

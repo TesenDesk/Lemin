@@ -1,28 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isdigitstr.c                                    :+:      :+:    :+:   */
+/*   vertex_funcs.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ftothmur <ftothmur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/10 09:56:40 by ftothmur          #+#    #+#             */
-/*   Updated: 2019/10/16 20:11:58 by jjerde           ###   ########.fr       */
+/*   Created: 2019/10/11 16:16:07 by ftothmur          #+#    #+#             */
+/*   Updated: 2019/10/15 17:53:38 by ftothmur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft_f.h"
+#include "ftothmur.h"
 
-int					ft_isdigitstr(char *str)
+t_vertex			*vertex_new(t_graph *graph)
 {
-	int				decision;
+	t_vertex		*vertex;
 
-	decision = !TRUE;
-	if (str)
-	{
-		str += (*str == '+' || *str == '-') ? 1 : 0;
-		while (*str && ft_isdigit(*str))
-			++str;
-		decision = !*str ? TRUE : !TRUE; 
-	}
-	return (decision);
+	if (!(vertex = (t_vertex *)ft_memalloc(sizeof(*vertex))))
+		return (NULL);
+	if (graph && graph->vertices->type)
+		vertex->type = graph->vertices->type;
+	return (vertex);
+}
+
+t_vertex			*find_vertex(t_hash_map *map, char *name)
+{
+	t_vertex		*vertex;
+
+	vertex = (t_vertex *)hm_find(map, (void *)name);
+	return (vertex);
 }

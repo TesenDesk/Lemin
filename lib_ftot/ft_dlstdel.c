@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_dlstdel.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ftothmur <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ftothmur <ftothmur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/23 15:46:01 by ftothmur          #+#    #+#             */
-/*   Updated: 2019/10/10 21:14:53 by ftothmur         ###   ########.fr       */
+/*   Updated: 2019/10/16 20:11:58 by jjerde           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,10 @@ void			ft_dlstdel(t_dlist **alst, void (*delptr)(void *, size_t))
 	t_dlist		*next;
 	t_dlist		*curr;
 
-	if (alst && delptr && *alst)
+	if (alst && *alst)
 	{
+		if (!delptr)
+			delptr = ft_delfunc_dummy;
 		curr = *alst;
 		while (TRUE)
 		{

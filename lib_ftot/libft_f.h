@@ -6,12 +6,14 @@
 /*   By: ftothmur <ftothmur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/11 20:07:00 by ftothmur          #+#    #+#             */
-/*   Updated: 2019/10/11 21:06:41 by ftothmur         ###   ########.fr       */
+/*   Updated: 2019/10/16 20:55:14 by ftothmur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LIBFT_F_H
 # define LIBFT_F_H
+
+# include "libft.h"
 
 # include <string.h>
 # include <stdlib.h>
@@ -47,20 +49,23 @@
 # define BEST_SIZE	    4096
 # define LONGINTSTR_MAX	20
 
-typedef struct			s_list
+typedef struct		s_dlist
 {
-	void				*content;
-	size_t				content_size;
-	struct s_list		*next;
-}						t_list;
+	void			*content;
+	size_t			content_size;
+	int				flow;
+	struct s_dlist	*next;
+	struct s_dlist	*prev;
+}					t_dlist;
 
-typedef struct			s_dlist
+/*
+**      Double deque (double double-ended queue)
+*/
+typedef struct			s_ddeq
 {
-	void				*content;
-	size_t				content_size;
-	struct s_dlist		*next;
-	struct s_dlist		*prev;
-}						t_dlist;
+	t_dlist				*a;
+	t_dlist				*b;
+}						t_ddeq;
 
 typedef long long int	t_lli;
 typedef unsigned int	t_ui;
@@ -121,5 +126,14 @@ char					*ft_reverse(char *buffer, int i, int j);
 char					*ft_strrev(char *str);
 void					ft_swap(void *x, void *y, size_t size);
 void					*ft_realloc(void *buf1, size_t size1, size_t size2);
+void					ft_free_ptr_ar(void ***ar);
+t_ddeq					*ft_ddeqnew(t_dlist *a);
+t_dlist					*ft_ddeq_new_a(t_ddeq **ddeq,
+							void *content, ssize_t content_size);
+void					ft_ddeqdel(t_ddeq **ddeq,
+							void (*delfunc)(void *, size_t));
+void					ft_ddeqpush_b_all(t_ddeq *ddeq);
+void					ft_ddeqpush_b(t_ddeq *ddeq);
+void					ft_delfunc_dummy(void *who_cares, size_t never_mind);
 
 #endif
