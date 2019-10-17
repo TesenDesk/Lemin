@@ -6,7 +6,7 @@
 /*   By: ftothmur <ftothmur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/08 14:50:49 by ftothmur          #+#    #+#             */
-/*   Updated: 2019/10/16 23:10:07 by jjerde           ###   ########.fr       */
+/*   Updated: 2019/10/17 16:29:03 by ftothmur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,19 @@ int					resize_vertices(t_graph *graph, int *state)
 void				exit_procedure(t_graph *graph, char **line, int *state,
 		t_hash_map **map)
 {
+	int				i;
+	t_vertices		*v;
+
 	// Осовобождение списков смежности не реализовано.
-	ft_free_ptr_ar((void ***)(&graph->vertices));
-		ft_memdel((void **)line);
+	i = graph->v_size;
+	v = graph->vertices;
+	while (i)
+		free((void *)(v + --i));
+	ft_memdel((void **)&v);
 	(void)map;
 //	hm_del(map);
+	if (line && *line)
+		ft_memdel((void **)line);
 	*state = ERROR;
  	return ;
  }
@@ -54,7 +62,14 @@ int					parse_lines(t_graph *graph, t_hash_map **map)
 				fill_map_with_vertices(graph, &line, &state, map) == FAILURE)
 			exit_procedure(graph, &line, &state, map);
 		while ((gnl_ret = get_next_line(STDIN, &line)) > 0 && state != ERROR)
+		{
+			if (iscomment(line))
+			{
+				ft_memdel((void **)&line);
+				continue ;
+			}
 			put_edges(&line, map);
+		}
 	}
 	else
 	{
@@ -67,14 +82,16 @@ int					parse_lines(t_graph *graph, t_hash_map **map)
 t_fill_return		fill_map(void)
 {
 	t_graph			graph;
-	t_hash_map		*map;
 
+	ft_bzero((void *)&graph, sizeof(graph));
 	graph.max_size = BEST_SIZE > 0 ? BEST_SIZE : 4096;
-	map = NULL;
+	graph.ret.map = NULL;
 	if (!(graph.vertices = (t_vertices *)ft_memalloc(graph.max_size *
-			sizeof(t_vertices))) || parse_lines(&graph, &map)
+			sizeof(t_vertices))) || parse_lines(&graph, &graph.ret.map)
 			== FAILURE)
 		return (graph.ret);
+	graph.ret.v_source = hm_find(graph.ret.map, graph.ret.source);
+	graph.ret.v_sink = hm_find(graph.ret.map, graph.ret.sink);
 	free((void *)graph.vertices);
 	return (graph.ret);
 }

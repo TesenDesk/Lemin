@@ -6,7 +6,7 @@
 /*   By: jstokes <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/09 17:46:12 by jstokes           #+#    #+#             */
-/*   Updated: 2019/10/16 23:26:44 by jjerde           ###   ########.fr       */
+/*   Updated: 2019/10/17 13:55:27 by jjerde           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define LEMIN_H
 
 # include "libft.h"
+# include "libft_f.h"
 # include <fcntl.h>
 
 typedef struct	s_mainstr
@@ -43,7 +44,7 @@ void			ft_lstdelstr(t_list **alst);
 void			ft_lstaddend(t_list **alst, t_list *new);
 size_t			ft_lstlen(t_list *alst);
 
-t_cont			*create_cont(int x, int y);
+//t_cont			*create_cont(int x, int y);
 
 t_mainstr		*read_from_file(char *str);
 

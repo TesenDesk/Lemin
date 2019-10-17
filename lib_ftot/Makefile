@@ -6,7 +6,7 @@
 #    By: ftothmur <ftothmur@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/12 20:24:31 by ftothmur          #+#    #+#              #
-#    Updated: 2019/10/16 19:19:40 by ftothmur         ###   ########.fr        #
+#    Updated: 2019/10/17 13:55:27 by jjerde           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@
 .PHONY:			all clean_lib clean_this clean fclean_lib fclean_thisfclean re
 #====================================LIB=======================================#
 #---------------------------------mstygg lib-----------------------------------#
-M_LIB_DIR		:=	../libft_t/
+M_LIB_DIR		:=	../mstygg/libft_t/
 M_HL_DIR		:=	$(M_LIB_DIR)includes/
 M_LIB			:=	$(M_LIB_DIR)libft.a
 M_LIB_FLAGS		:=	-L $(M_LIB_DIR) -lft

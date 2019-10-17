@@ -6,7 +6,7 @@
 /*   By: ftothmur <ftothmur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/08 21:33:45 by ftothmur          #+#    #+#             */
-/*   Updated: 2019/10/16 23:06:51 by jjerde           ###   ########.fr       */
+/*   Updated: 2019/10/17 16:39:49 by ftothmur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ typedef struct		s_fill_return
 	char			*sink;
 	t_vertex		*v_sink;
 	t_hash_map		*map;
-}					t_fill_return;
+	}					t_fill_return;
 
 typedef struct		s_vertices
 {
@@ -79,7 +79,7 @@ typedef struct		s_graph
 
 typedef int			(*t_parse)(t_graph *, char **);
 
-t_vertex			*vertex_new(t_graph *graph);
+t_vertex			*vertex_new(t_graph *graph, int v_size);
 t_vertex			*find_vertex(t_hash_map *map, char *name);
 int					put_edges(char **linex, t_hash_map **map);
 int					fill_map_with_vertices(t_graph *graph, char **line,
@@ -103,8 +103,6 @@ t_fill_return		fill_map(void);
 void				fill_vertex(t_graph *graph, char **line, int *state);
 void				exit_procedure(t_graph *graph, char **line, int *state,
 						t_hash_map **map);
-
-void 				*something(t_vertex *s, t_vertex *f);
 
 int						main(void);
 

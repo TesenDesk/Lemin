@@ -6,7 +6,7 @@
 /*   By: jjerde <jjerde@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/11 18:40:48 by jjerde            #+#    #+#             */
-/*   Updated: 2019/10/16 23:20:27 by jjerde           ###   ########.fr       */
+/*   Updated: 2019/10/17 12:39:10 by jjerde           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,8 @@ t_vertex *find_cheap_vertex(t_vertex *c)
 	t_dlist *l;
 	t_dlist *head;
 
+	if (!c)
+		return (NULL);
 	res = c;
 	l = c->links;
 	head = l;
@@ -124,6 +126,8 @@ t_dlist *shortest_way(t_vertex *f)
 	t_dlist *head;
 	t_dlist *tmp;
 
+	if (!f)
+		return (NULL);
 	if (!(path = ft_dlstnew(&f, sizeof(t_vertex *))))
 		return (emergency_free_dlist(path));
 	head = path;
@@ -273,5 +277,3 @@ void *something(t_vertex *s, t_vertex *f) //TODO: Переименовать ф�
 /* ************************************************************************** */
 /* **************** OLD STAFF *********************************************** */
 /* ************************************************************************** */
-
-

@@ -6,21 +6,21 @@
 /*   By: mstygg <mstygg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/06 23:42:54 by mstygg            #+#    #+#             */
-/*   Updated: 2019/10/10 22:20:21 by mstygg           ###   ########.fr       */
+/*   Updated: 2019/10/12 15:28:49 by jjerde           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 // #include <stdio.h>
 
-LL      hashcode(U_CHAR *str) 
+ULL      hashcode(U_CHAR *str)
 {
-	ULL     hash; 
+	ULL     hash;
 	int     c;
 
 	c = 0;
-	hash = HASH_CONST; 
-	while ((c = (int)*str++)) 
+	hash = HASH_CONST;
+	while ((c = (int)*str++))
 		hash = ((hash << 5) + hash) ^ c;
 	return (hash);
 }
@@ -43,13 +43,13 @@ t_hash_map			*createHashmap(size_t vertices_num)
 }
 
 
-int            		push_to_map(t_hash_map **_map_, t_pair *pair)
+int					push_to_map(t_hash_map **_map_, t_pair *pair)
 {
-	LL				index;
+	ULL				index;
 	t_hash_map		*map;
 
 	map = *_map_;
-	index = hashcode((U_CHAR*)pair->key) % map->arr_size;
+	index = hashcode((U_CHAR*)pair->key) % map->arr_size;//нашли номер ячейки массива деревьев
 	if (!(map->data[index] = ft_keystr_avl_insert(map->data[index], pair)))
 		return (0);
 	++map->map_size;
@@ -58,13 +58,9 @@ int            		push_to_map(t_hash_map **_map_, t_pair *pair)
 /*
 **оберка для put
 */
-int					hm_put(t_hash_map **map, void *key, t_cont *content)
+int					hm_put(t_hash_map **map, void *key, void *content)
 {
-	t_pair	*pair;
-
-	pair = NULL;
-	if (!(key))
-		return (0);
+	t_pair *pair;
 	if (!(pair = malloc(sizeof(t_pair))))
 		return (0);
 	pair->key = key;
@@ -72,20 +68,15 @@ int					hm_put(t_hash_map **map, void *key, t_cont *content)
 	return (push_to_map(map, pair));
 }
 
-t_cont				*hm_find(t_hash_map *map, void *key)
+void				*hm_find(t_hash_map *map, void *key)
 {
-	LL				index;
+	ULL				index;
 	t_keystr_avl_t 	*avl_tmp;
 
-	index = 0;
-	if (!(key))
-		return (NULL);
 	index = hashcode((U_CHAR*)key) % map->arr_size;
-	if (!(map->data[index]))
+	if (!map->data[index])
 		return (NULL);
 	avl_tmp = ft_keystr_avl_search(map->data[index], key);
-	if (!(avl_tmp))
-		return (avl_tmp);
 	return (avl_tmp->pair->content);
 }
 

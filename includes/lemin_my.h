@@ -6,7 +6,7 @@
 /*   By: jjerde <jjerde@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/23 17:16:46 by jjerde            #+#    #+#             */
-/*   Updated: 2019/10/16 23:26:44 by jjerde           ###   ########.fr       */
+/*   Updated: 2019/10/17 12:17:26 by jjerde           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,15 +17,16 @@
 # include <stdlib.h>
 # include <limits.h>
 # include <stdio.h>
-# include "../lib_ftot/libft_f.h"
-# include "libft.h"
-# include "../src/ftothmur.h"
-# include "ft_printf.h"
-# include "libft.h"
-# include "lemin.h"
+#include "libft.h"
+#include "libft_f.h"
+#include "ft_printf.h"
+#include "ftothmur.h"
+#include "get_next_line.h"
+#include "lemin.h"
+
 
 # define START	1
-# define FIN	2
+# define FIN	-1
 # define TRUE	1
 # define FALSE	0
 # define VACUUM	-1

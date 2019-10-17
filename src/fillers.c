@@ -6,7 +6,7 @@
 /*   By: ftothmur <ftothmur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/11 16:05:12 by ftothmur          #+#    #+#             */
-/*   Updated: 2019/10/16 22:31:59 by ftothmur         ###   ########.fr       */
+/*   Updated: 2019/10/17 16:40:52 by ftothmur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,9 @@ int					set_names(char **line, t_edge *edge)
 
 	temp = ft_strchr(*line, '-');
 	edge->name_l = ft_strsub(*line, 0, temp - *line);
+	++temp;
 	if (edge->name_l)
-		edge->name_r = ft_strsub(*line, 0, temp - *line);
+		edge->name_r = ft_strsub(temp, 0, ft_strlen(temp));
 	if (!edge->name_r)
 		ft_memdel((void **)&edge->name_l);
 	ft_memdel((void **)line);
@@ -103,12 +104,12 @@ int					fill_map_with_vertices(t_graph *graph, char **line,
 	vertices = graph->vertices;
 	while (v_size)
 	{
-		if (!(vertex = vertex_new(graph)))
+		if (!(vertex = vertex_new(graph, --v_size)))
 		{
 			*state = ERROR;
 			break ;
 		}
-		hm_put(map, (void *)(vertices + v_size-- - 1)->name, (void *)vertex);
+		hm_put(map, (void *)(vertices + v_size)->name, (void *)vertex);
 	}
 	*state = (put_edges(line, map) == FAILURE) ? ERROR : *state;
 	return (*state == ERROR ? FAILURE : SUCCESS);
@@ -139,7 +140,7 @@ void				fill_vertex(t_graph *graph, char **line, int *state)
 	if (graph->v_size == graph->max_size)
 		if (resize_vertices(graph, state) == FAILURE)
 			return ;
-	v_curr = &graph->vertices[graph->v_size];
+	v_curr = graph->vertices + graph->v_size;
 	if (!(top = ft_strchr(*line, ' ')) ||
 			!(v_curr->name = ft_strsub(*line, 0, top - *line)))
 	{

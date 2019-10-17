@@ -6,7 +6,7 @@
 /*   By: mstygg <mstygg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/26 16:31:20 by mstygg            #+#    #+#             */
-/*   Updated: 2019/10/10 21:56:23 by mstygg           ###   ########.fr       */
+/*   Updated: 2019/10/09 15:13:55 by mstygg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,20 +23,10 @@
 
 typedef struct				s_list
 {
-	int						x;
-	int						y;
 	void					*content;
 	size_t					content_size;
 	struct s_list			*next;
 }							t_list;
-
-typedef struct				s_cont
-{
-	int		x;
-	int		y;
-	int		bfs_lev;
-	t_list	*list;
-}							t_cont;
 
 typedef struct				s_avl_t
 {
@@ -51,7 +41,7 @@ typedef struct				s_avl_t
 typedef	struct 				s_pair
 {
 	char					*key;
-	t_cont					*content;
+	void					*content;
 }							t_pair;
 
 typedef struct				s_keystr_avl_t
@@ -224,14 +214,14 @@ void						ft_keystr_avl_del(t_keystr_avl_t **_root_);
 /*
 **HASHMAP_FUNC
 */
-LL      					hashcode(U_CHAR *str);
+ULL      					hashcode(U_CHAR *str);
 t_hash_map					*createHashmap(size_t vertices_num);
 /*
 **push_to_map не использовать-это внутренняя функция
 */
 int          		  		push_to_map(t_hash_map **map, t_pair *pair);
-int							hm_put(t_hash_map **map, void *key, t_cont *content);
-t_cont						*hm_find(t_hash_map *map, void *key);
+int							hm_put(t_hash_map **map, void *key, void *content);
+void						*hm_find(t_hash_map *map, void *key);
 
 
 

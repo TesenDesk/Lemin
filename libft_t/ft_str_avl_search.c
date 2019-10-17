@@ -19,7 +19,7 @@ t_keystr_avl_t	*ft_keystr_avl_search(t_keystr_avl_t *p, void *key)
 		{
 			if (CMP(p->pair->key, key) < 0)
 				p = p->right;
-			else if (CMP(p->pair->key, key) > 0)
+			if (CMP(p->pair->key, key) > 0)
 				p = p->left;
 			else
 				return (p);
