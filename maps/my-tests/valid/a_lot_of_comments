@@ -1,0 +1,91 @@
+42
+#This file have a lot of comments.
+#But it still a valid file.
+#Your program must accept it.
+#Hmmm
+##star
+not_start 2 2
+##stard
+not_start_too 3 3
+##startr
+this_is_not_start 4 4
+##startt
+and_this 5 5
+#start
+and_this_too 6 6
+##START
+lol 7 7
+##574r7
+not_start_anyway 8 8
+############################start
+huh? 9 9
+#start#
+#I'm tired of inventing
+huh_huh? 10 10
+##start
+#decoy
+#decoy
+##decoy
+###decoy
+#decoy
+#decoy#
+#bait
+start 1 1
+#end
+not_end 90 90
+###end
+no_end 91 91
+#end#
+kek 92 92
+##eend
+end 93 93
+##endd
+end? 94 94
+##END
+END 95 95
+##end#
+fake_end 96 96
+##end>
+end_fake 97 97
+##end
+#decoy
+##decoy
+###decoy
+#bait
+##bait##
+################################################################################
+####################################################super bait##################
+################################################################################
+#
+#
+#
+# **************************************************************************** #
+#                                                                              #
+#                                                           ::::::::      :::  #
+#    LOL WHAT?   24.fr HEADER???!?!?!?!?!                 :+:    :+:    :+:    #
+#                                                              +:+    +:+ +:+  #
+#    By: unknown <#########@student.24.fr>                  +#+     +#+  +:+   #
+#                                                        +#+      +#+#+#+#+#+  #
+#    Created: 1337/14/88 00:00:00 by some_idiot        #+#             #+#     #
+#    Updated: 1090/01/19 99:99:99 by lem-in_test     ############     ###.fr   #
+#                                                                              #
+# **************************************************************************** #
+real_end 99 99
+not_start-not_start_too
+not_start_too-this_is_not_start
+this_is_not_start-and_this
+and_this-and_this_too
+and_this_too-lol
+lol-not_start_anyway
+not_start_anyway-huh?
+huh?-huh_huh?
+huh_huh?-not_end
+start-not_start
+not_end-no_end
+no_end-kek
+kek-end
+end-end?
+end?-END
+END-fake_end
+fake_end-end_fake
+end_fake-real_end

@@ -1,0 +1,47 @@
+42
+##start
+START 0 4
+a 2 0
+b 4 0
+c 6 0
+d 2 2
+e 4 2
+f 6 2
+e1 5 3
+da 2 4
+ea 4 4
+fa 6 4
+g 2 6
+h 4 6
+i 6 6
+i1 4 8
+j 2 10
+k 4 10
+l 6 10
+##end
+FINISH 8 4
+START-a
+START-d
+START-i1
+a-b
+b-c
+b-e
+c-f
+d-e
+d-da
+e-f
+e-e1
+e-ea
+f-fa
+f-FINISH
+g-da
+g-h
+g-j
+h-ea
+h-i
+i-fa
+i-i1
+j-k
+k-l
+l-FINISH
+e1-FINISH

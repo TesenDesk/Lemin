@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lemin.h                                            :+:      :+:    :+:   */
+/*   lemin_my.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jjerde <jjerde@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/23 17:16:46 by jjerde            #+#    #+#             */
-/*   Updated: 2019/10/17 12:17:26 by jjerde           ###   ########.fr       */
+/*   Updated: 2019/11/03 21:25:29 by jjerde           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,64 +17,48 @@
 # include <stdlib.h>
 # include <limits.h>
 # include <stdio.h>
-#include "libft.h"
-#include "libft_f.h"
-#include "ft_printf.h"
-#include "ftothmur.h"
-#include "get_next_line.h"
-#include "lemin.h"
+# include "ftothmur.h"
+# include "get_next_line.h"
 
-
-# define START	1
-# define FIN	-1
-# define TRUE	1
-# define FALSE	0
-# define VACUUM	-1
-# define LOCKED	1
-# define OPEN	0
-
-/*
-typedef struct				s_vertex
-{
-	char					*name;
-	int						type;
-	int						visited;
-	int 					cap;
-	int						price;
-	struct s_vertex			*parent;
-	struct s_dlist			*links;
-}							t_vertex;
- */
-/*
-typedef struct				s_queu
-{
-	struct s_vertex	*current;
-	struct s_queu	*next;
-}							t_queu;
-*/
-
-/*
-typedef struct	s_conn
-{
-	struct s_vertex	*current;
-	struct s_conn	*next;
-}				t_conn;
-*/
-
-
-/*
-** My funcs (don't forget add this in header)
-*/
+# define START		1
+# define FIN		(-1)
+# define TRUE		1
+# define FALSE		0
+# define VACUUM		(-1)
+# define LOCKED		1
+# define OPEN		0
 
 void				*emergency_free_dlist(t_dlist *path);
-//int				ft_printf(const char *str, ...);
 
-t_dlist *queu_add(t_dlist *q, t_vertex *c);
-t_dlist *queu_remove(t_dlist *q);
+void				*algorithm_run(t_graph *g);
+t_dlist				*bfs(t_vertex *c);
+t_vertex			*finish_found(t_vertex *c);
+t_dlist				*add_another_path(t_vertex *s, t_vertex *f, t_ddeq *hub);
+void				lock_path(t_dlist *path);
+t_vertex			*find_cheap_vertex(t_vertex *f);
+void				set_around_as_not_priced(t_vertex *f);
+t_dlist				*shortest_way(t_vertex *f);
+int					search_next_visited(t_vertex *c);
 
-t_dlist *add_this_q(t_vertex *c, t_dlist *q);
-int	way_price(t_vertex *c);
-t_dlist *bfs(t_vertex *c);
+int					deep_bfs(t_ddeq *hub, t_vertex *s);
+int					recursive_q(t_vertex *to, int i, t_vertex *from);
+int					emergency_free_dlist_return_int(t_dlist *path, int huh);
+t_dlist				*search_flow_parent(t_vertex *from, t_vertex *to, int i);
 
-void unknown_func(int i);
+void				remove_visited(t_dlist *hq);
+void				set_params(t_vertex *v, t_vertex *p, int i);
+
+void				debug_print_amount_of_paths(t_dlist *paths);
+void				debug_print_path(t_dlist *path);
+void				debug_print_paths(t_dlist *paths, t_graph *g, int mode);
+void				print_line(int c, int lng);
+void				debug_print_answer_len(int len);
+void				*putstr_return_null(char *str);
+void				paths_del(t_dlist *paths);
+
+t_dlist				*run_bfs(t_vertex *s, t_vertex *f, t_ddeq *hub);
+t_dlist				*lets_go(t_vertex *s, t_vertex *v);
+t_dlist				*deep_search_correct_path(t_vertex *f);
+void				clear_all_prices(t_vertex **list, t_vertex *f);
+
 #endif

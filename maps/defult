@@ -1,0 +1,20 @@
+21
+##start
+start 0 2
+A 2 0
+B 4 0
+C 3 2
+D 7 2
+E 6 4
+F 8 4
+##end
+finish 10 2
+start-A
+A-B
+B-D
+start-C
+C-D
+C-E
+E-F
+F-finish
+D-finish

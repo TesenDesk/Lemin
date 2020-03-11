@@ -1,0 +1,11 @@
+42
+#This file has no a newline at end
+##start
+1 1 1
+2 2 2
+3 3 3
+##end
+9 9 9
+1-2
+2-3
+3-9

@@ -1,0 +1,29 @@
+42
+##start
+START 0 2
+a 2 0
+b 10 0
+c 2 2
+d 10 2
+e 2 4
+f 4 4
+g 6 4
+h 8 4
+i 10 4
+x 6 6
+##end
+FINISH 12 2
+a-b
+b-FINISH
+START-c
+c-a
+c-d
+d-FINISH
+d-i
+START-e
+i-h
+h-g
+h-x
+x-f
+f-g
+e-f

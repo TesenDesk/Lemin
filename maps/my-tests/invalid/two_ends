@@ -1,0 +1,15 @@
+21
+#This map has 2 ends
+##start
+STR 0 0
+A 1 1
+##end
+lol 84 14
+B 2 2
+C 3 3
+##end
+END 99 99
+STR-A
+A-B
+B-C
+C-END

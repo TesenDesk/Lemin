@@ -1,0 +1,14 @@
+42
+#This map has link to nonexistent vertex d.
+##start
+start 0 0
+##end
+end 9 9
+a 1 1
+b 2 2
+c 3 3
+a-b
+b-c
+c-d
+start-a
+end-c
